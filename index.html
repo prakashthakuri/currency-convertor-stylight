@@ -7,15 +7,31 @@
     <body>
         <div>Stylight Currency Converter</div>
         <span>
-            <form action="./">
-                <p>Amount:</p>
-                <input type="text">
-                <p>Source currency:</p>
-                <input type="text" value="EUR">
-                <p>Target currency:</p>
-                <input type="text" value="USD">
-            </form>
-            <p>Result:</p>
+            <!-- <form action="./"> -->
+                <label>Amount:</label>
+                <input class="amount" type="number" step="0.01" value="1" >
+                <p>From:</p>
+                <select name="initialCurrency">
+                    <option value="eur">EUR - Euro</option>
+                    <option value="usd">USD - US Dollar</option>
+                    <option value="jpy">JPY - Japanese Yen</option>
+                </select>
+                <p>To:</p>
+                <select name="exchangeCurrency">
+                    <option value="eur">EUR - Euro</option>
+                    <option value="usd">USD - US Dollar</option>
+                    <option value="jpy">JPY - Japanese Yen</option>
+                </select>
+                <br/>
+                <br/> <br/>
+
+
+                <button class="convert">
+                    
+                    Convert
+                </button>
+            <!-- </form> -->
+            <label>Result: </label>
         </span>
         
         <!-- Use the `axios` library for making Ajax requests. -->

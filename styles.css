@@ -2,6 +2,12 @@ html body:last-child {
     font-family: "helvetica";
 }
 
+*,
+*::before,
+*::after{
+    box-sizing: border-box ;
+}
+
 body div {
     background: #29ceb5;
     color: #FfFfff;
@@ -10,6 +16,7 @@ body div {
     padding-left: 50px;
     padding: 100px 0 25px;
     text-align: center;
+    line-height: 1.6;
 }
 
 html div + span {
@@ -19,3 +26,16 @@ html div + span {
     max-width: 300px;
     padding: 1rem;
 }
+
+
+/* my css */
+
+/* hiding arrow in number input */
+
+
+.amount::-webkit-outer-spin-button,
+.amount::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+
