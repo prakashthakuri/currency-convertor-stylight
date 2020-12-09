@@ -8,7 +8,7 @@ const apikey = "a97dd16b7c90bb148ead75d896132793"; // My Personal API KEY
 const apiurl = "http://data.fixer.io/api/latest/"; // Api URL with its endpoint(latest)
 
 let convert = document.getElementById("convert"); // button
-
+let history = document.getElementById("history");
 //responsedate is the value fetched from axios, amount is the value input by the user,
 //initial currencya and exchange currency is the exchange currency desired by the user
 function getConversion(responseData, amount, initialCurrency, exchangeCurrency) {
@@ -38,13 +38,7 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     "</strong>";
     
 
-  //Storage
-  //localStorage will not work for this project
 
-  //   localStorage.setItem('result', convertedAmount)
-  //   let results = localStorage.getItem('result')
-  //   console.log(results)
-  //   document.getElementById("history").innerHTML = results
 
   //Getting the TimeStamp for the history
   console.log(responseData.timestamp);
@@ -69,6 +63,25 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   document.getElementById("conv").innerHTML = initialCurrency + " to " + exchangeCurrency+" Conversion";
 
 
+  }
+
+  //Storage using localStorage
+  const key = amount;
+  const value = convertedAmount;
+  console.log(key, value)
+  if(key && value) {
+    localStorage.setItem(key, value)
+    
+
+    for(let i = 0; i < 10; i++){
+
+      const key = localStorage.key(i);
+      const value= localStorage.getItem(key);
+
+
+      history.innerHTML += `${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} <br/>`
+      // history.innerHTML +=`${key} ${value}<br/>`
+    }
   }
 
 
