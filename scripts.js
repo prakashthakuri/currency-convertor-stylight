@@ -5,7 +5,7 @@
 // Stylight
 
 const apikey = "a97dd16b7c90bb148ead75d896132793"; // My Personal API KEY
-const apiurl = "https://data.fixer.io/api/latest/"; // Api URL with its endpoint(latest)
+const apiurl = "http://data.fixer.io/api/latest/"; // Api URL with its endpoint(latest)
 
 let convert = document.getElementById("convert"); // button
 let history = document.getElementById("history");
@@ -34,8 +34,7 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   console.log(amount, convertedAmount);
 
   //Displaying the result
-  const result = `${initialCurrency} ${amount} <br> is equivalent to <br/> <b> ${exchangeCurrency} ${convertedAmount} </b>`
-  
+  const result = `${initialCurrency} ${amount} <br> is equivalent to <br/> <b> ${exchangeCurrency} ${convertedAmount} </b>`;
 
   //Getting the TimeStamp for the history
   console.log(responseData.timestamp);
@@ -56,14 +55,13 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     document.getElementById("result").innerHTML = result; //Rendering the Converted Amount
 
     document.getElementById("date").innerHTML = `<br> as of <br> ${date}`; // Rendering date
-    document.getElementById("conv").innerHTML =`${initialCurrency} to ${exchangeCurrency} Conversion `;
+    document.getElementById(
+      "conv"
+    ).innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
   }
 
-  localStore(amount, convertedAmount, initialCurrency, exchangeCurrency, date)
-
-
+  localStore(amount, convertedAmount, initialCurrency, exchangeCurrency, date);
 }
-
 
 // Mathematical Conversion of the currency
 
@@ -104,32 +102,31 @@ function AxiosAPI() {
 }
 
 convert.addEventListener("click", AxiosAPI);
-window.onload = localStore()
+window.onload = localStore();
 
-// Storing the converted histroy 
+// Storing the converted histroy
 function localStore(key, value, initialCurrency, exchangeCurrency, time) {
-  console.log('this is working onload')
-  
-  
+  console.log("this is working onload");
+ 
+  console.log(key, value, initialCurrency, exchangeCurrency);
 
-  console.log(key,value, initialCurrency, exchangeCurrency)
-  
-  if (key && value) {
-    localStorage.setItem(key.toString(), value.toString());
-
-    //  for (let i = 0; i < localStorage.length; i++) { //localStorage.length()
-    // const key = localStorage.key(i);
-    //  localStorage.removeItem(key)
-    // const value = localStorage.getItem(key);
-
-      // history.innerHTML += `<ul><li>${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} as of ${time} <br/></li></ul>`;
-
+    if (key && value) {
+      sessionStorage.setItem('amount', key);
+      sessionStorage.setItem('value', value);
+      sessionStorage.setItem('time', time)
+      sessionStorage.setItem('initialCur', initialCurrency)
+      sessionStorage.setItem('excCur', exchangeCurrency)
       
-        history.innerHTML += `<ul><li>${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} as of ${time} <br/></li></ul>`;
+   }
 
-     
+  let rAmount = sessionStorage.getItem('amount')
+  let rValue = sessionStorage.getItem('value')
+  let rTime = sessionStorage.getItem('time')
+  let rInit = sessionStorage.getItem('initialCur')
+  let rExc = sessionStorage.getItem('excCur')
+  
+  let finalResult = `<ul><li>${rInit} ${rAmount} is equivalent to ${rExc} ${rValue} as of ${rTime} <br/></li></ul>`;
+  console.log(finalResult);
+  history.innerHTML += finalResult
 
-    //  }
-  }
 }
-

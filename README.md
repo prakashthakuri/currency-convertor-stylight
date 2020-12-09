@@ -8,5 +8,6 @@
 - As the solution must only work on the latest Chrome version, you can make use of ES6 features and new CSS technologies without thinking about transpiling or vendor-prefixing things. Of course you do not have to use fancy new stuff, but it is a bonus.
 
 Bonus:
+
 - Show a history of conversion inputs.
 - Keep the history persistent on browser reload.
