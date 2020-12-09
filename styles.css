@@ -115,12 +115,12 @@ input, select {
 
 label {
     display: flex;
-    color: var(--clr-dark);
     font-weight: var(--fw-bold);
     display: block;
     text-align: center;
     font-size: 1.5em;
     transition: width 4s;
+    font-weight: var(--fw-bold);
     
 
 }
@@ -129,11 +129,11 @@ label, .conv {
     
 }
 
+div.history{
+    overflow: scroll;
+}
 
 
-
-
-/* hiding arrow in number input */
 
 
 .amount::-webkit-outer-spin-button,

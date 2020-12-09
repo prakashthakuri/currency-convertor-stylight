@@ -115,15 +115,21 @@ function localStore(key, value, initialCurrency, exchangeCurrency, time) {
   console.log(key,value, initialCurrency, exchangeCurrency)
   
   if (key && value) {
-    //localStorage.setItem(key.toString(), value.toString());
+    localStorage.setItem(key.toString(), value.toString());
 
-    // for (let i = 0; i < localStorage.length; i++) {
-      //const key = localStorage.key(i);
-     // localStorage.removeItem(key)
-      //const value = localStorage.getItem(key);
+    //  for (let i = 0; i < localStorage.length; i++) { //localStorage.length()
+    // const key = localStorage.key(i);
+    //  localStorage.removeItem(key)
+    // const value = localStorage.getItem(key);
 
-      history.innerHTML += `<ul><li>${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} as of ${time} <br/></li></ul>`;
-    // }
+      // history.innerHTML += `<ul><li>${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} as of ${time} <br/></li></ul>`;
+
+      
+        history.innerHTML += `<ul><li>${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} as of ${time} <br/></li></ul>`;
+
+     
+
+    //  }
   }
 }
 
