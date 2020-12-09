@@ -5,7 +5,7 @@
 // Stylight
 
 const apikey = "a97dd16b7c90bb148ead75d896132793"; // My Personal API KEY
-const apiurl = "http://data.fixer.io/api/latest/"; // Api URL with its endpoint(latest)
+const apiurl = "https://data.fixer.io/api/latest/"; // Api URL with its endpoint(latest)
 
 let convert = document.getElementById("convert"); // button
 let history = document.getElementById("history");
