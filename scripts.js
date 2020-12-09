@@ -60,7 +60,7 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     ).innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
   }
 
-  localStore(amount, convertedAmount, initialCurrency, exchangeCurrency, date);
+ localStore(amount, convertedAmount, initialCurrency, exchangeCurrency, date);
 }
 
 // Mathematical Conversion of the currency
@@ -115,8 +115,7 @@ function localStore(key, value, initialCurrency, exchangeCurrency, time) {
       sessionStorage.setItem('value', value);
       sessionStorage.setItem('time', time)
       sessionStorage.setItem('initialCur', initialCurrency)
-      sessionStorage.setItem('excCur', exchangeCurrency)
-      
+      sessionStorage.setItem('excCur', exchangeCurrency) 
    }
 
   let rAmount = sessionStorage.getItem('amount')
@@ -125,7 +124,7 @@ function localStore(key, value, initialCurrency, exchangeCurrency, time) {
   let rInit = sessionStorage.getItem('initialCur')
   let rExc = sessionStorage.getItem('excCur')
   
-  let finalResult = `<ul><li>${rInit} ${rAmount} is equivalent to ${rExc} ${rValue} as of ${rTime} <br/></li></ul>`;
+  let finalResult = `${rInit} ${rAmount} is equivalent to ${rExc} ${rValue} as of ${rTime}<br>`;
   console.log(finalResult);
   history.innerHTML += finalResult
 
