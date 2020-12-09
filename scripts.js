@@ -10,8 +10,10 @@ const apiurl = "https://data.fixer.io/api/latest/"; // Api URL with its endpoint
 let convert = document.getElementById("convert"); // button
 let history = document.getElementById("history");
 const resultDiv = document.getElementById("result-div");
- //DIv Toogle
- resultDiv.style.display = "none";
+// let convertedAmount, amount // this is a global variable (checking for localstorage)
+
+//RESULT DIV Hide for Toogle
+resultDiv.style.display = "none";
 
 //responsedate is the value fetched from axios, amount is the value input by the user,
 //initial currencya and exchange currency is the exchange currency desired by the user
@@ -22,7 +24,8 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     EUR: responseData.rates.EUR,
     JPY: responseData.rates.JPY,
   };
-  var convertedAmount = conversion(
+  //referencing
+  let convertedAmount = conversion(
     amount,
     currency_val[initialCurrency],
     currency_val[exchangeCurrency]
@@ -31,15 +34,8 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   console.log(amount, convertedAmount);
 
   //Displaying the result
-  const result =
-    initialCurrency +
-    " " +
-    amount +
-    "<br/> is equivlent to<br/> <strong>" +
-    exchangeCurrency +
-    " " +
-    convertedAmount +
-    "</strong>";
+  const result = `${initialCurrency} ${amount} <br> is equivalent to <br/> <b> ${exchangeCurrency} ${convertedAmount} </b>`
+  
 
   //Getting the TimeStamp for the history
   console.log(responseData.timestamp);
@@ -50,8 +46,7 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   var hours = ("0" + newDate.getHours()).slice(-2);
   var minutes = ("0" + newDate.getMinutes()).slice(-2);
   var seconds = ("0" + newDate.getSeconds()).slice(-2);
-  var date =
-    year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+  var date = `${year}-${month}-${date}  ${hours}:${minutes}:${seconds}`;
   console.log(date);
 
   if (amount == "") {
@@ -60,28 +55,16 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   } else {
     document.getElementById("result").innerHTML = result; //Rendering the Converted Amount
 
-    document.getElementById("date").innerHTML = "<br>as of <br> " + date; // Rendering date
-    document.getElementById("conv").innerHTML =
-      initialCurrency + " to " + exchangeCurrency + " Conversion";
-    localStorage();
+    document.getElementById("date").innerHTML = `<br> as of <br> ${date}`; // Rendering date
+    document.getElementById("conv").innerHTML =`${initialCurrency} to ${exchangeCurrency} Conversion `;
   }
-}
-function localStorage() {
-  //Storage using localStorage
-  const key = amount;
-  const value = convertedAmount;
-  console.log(key, value);
-  if (key && value) {
-    localStorage.setItem(key, value);
 
-    for (let i = 0; i < 10; i++) {
-      const key = localStorage.key(i);
-      const value = localStorage.getItem(key);
+  localStore(amount, convertedAmount, initialCurrency, exchangeCurrency, date)
 
-      history.innerHTML += `${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} <br/>`;
-    }
-  }
+
 }
+
+
 // Mathematical Conversion of the currency
 
 function conversion(amount, initial, exchange) {
@@ -92,8 +75,8 @@ function AxiosAPI() {
   let amount = document.getElementById("amount").value;
   let initialCurrency = document.getElementById("initialCurrency").value; // This variable gets the currency you want to convert to.
   let exchangeCurrency = document.getElementById("exchangeCurrency").value; // this variable gets the value of the currency you want to convert to
-  if(resultDiv.style.display == "none") {
-    resultDiv.style.display ='block';
+  if (resultDiv.style.display == "none") {
+    resultDiv.style.display = "block";
   }
 
   axios
@@ -121,3 +104,26 @@ function AxiosAPI() {
 }
 
 convert.addEventListener("click", AxiosAPI);
+window.onload = localStore()
+
+// Storing the converted histroy 
+function localStore(key, value, initialCurrency, exchangeCurrency, time) {
+  console.log('this is working onload')
+  
+  
+
+  console.log(key,value, initialCurrency, exchangeCurrency)
+  
+  if (key && value) {
+    //localStorage.setItem(key.toString(), value.toString());
+
+    // for (let i = 0; i < localStorage.length; i++) {
+      //const key = localStorage.key(i);
+     // localStorage.removeItem(key)
+      //const value = localStorage.getItem(key);
+
+      history.innerHTML += `<ul><li>${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} as of ${time} <br/></li></ul>`;
+    // }
+  }
+}
+
