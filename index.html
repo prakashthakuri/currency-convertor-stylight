@@ -6,37 +6,47 @@
     </head>
     <body>
         <div>Stylight Currency Converter</div>
+
+
         <span>
             <!-- <form action="./"> -->
                 <label>Amount:</label>
-                <input class="amount" type="number" step="0.01" value="1" >
+                <input id="amount" type="number" step="0.01" value="90" >
                 <p>From:</p>
-                <select name="initialCurrency">
-                    <option value="eur">EUR - Euro</option>
-                    <option value="usd">USD - US Dollar</option>
-                    <option value="jpy">JPY - Japanese Yen</option>
+                <select id="initialCurrency">
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="JPY">JPY - Japanese Yen</option>
+                    <option value="EUR" selected>EUR - Euro</option>
+
                 </select>
                 <p>To:</p>
-                <select name="exchangeCurrency">
-                    <option value="eur">EUR - Euro</option>
-                    <option value="usd">USD - US Dollar</option>
-                    <option value="jpy">JPY - Japanese Yen</option>
+                <select id="exchangeCurrency">
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="JPY" selected>JPY - Japanese Yen</option>
+                    <option value="EUR">EUR - Euro</option>
+
                 </select>
                 <br/>
-                <br/> <br/>
+                <br/> <br/>        
 
 
-                <button class="convert">
+                <button id="convert" >
                     
                     Convert
                 </button>
             <!-- </form> -->
+            <div id="resultDiv">
             <label>Result: </label>
+            <label id="result"></label>
+
+            <label>Last Updated: </label> 
+            </div>
         </span>
         
         <!-- Use the `axios` library for making Ajax requests. -->
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <!-- Put your own JavaScript into this file. -->
+        
         <script src="scripts.js"></script>
     </body>
 </html>
