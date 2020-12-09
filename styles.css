@@ -1,34 +1,103 @@
-html body:last-child {
-    font-family: "helvetica";
-}
+
 
 *,
 *::before,
 *::after{
     box-sizing: border-box ;
+    font-family: "helvetica";
+
+}
+:root {
+    --fw-reg: 300;
+    --fw-bold: 3em;
+    --clr-light: #b5b2b8;
+    --clr-dark: #303030;
+    --clr-accent: #58ACFA;
+    --fs-body:2rem;
+    --fs-h1: 3rem;
+
+
+}
+html{
+    scroll-behavior: smooth;
 }
 
-body div {
-    background: #29ceb5;
-    color: #FfFfff;
-    font-size: 30px;
+body {
+    background: var(--clr-accent);
+    color: var(--clr-dark);
+    font-size: var(--fw-reg);
+    justify-content: center;
+    align-items: center;
     font-weight: bold;
-    padding-left: 50px;
     padding: 100px 0 25px;
     text-align: center;
-    line-height: 1.6;
 }
 
-html div + span {
-    background: lightgray;
+div {
+    height: 300px;
+    width: 100%;
+    background: var(--clr-light);
     display: block;
     margin: 20px auto;
     max-width: 300px;
     padding: 1rem;
 }
 
+button {
+    border-radius: 20px;
+    border: 1px solid #0f0d0d;
+    background-color: var(--clr-accent);
+    color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
 
-/* my css */
+button:active {
+	transform: scale(0.95);
+}
+
+button:focus {
+	outline: none;
+}
+
+button.ghost {
+	background-color: transparent;
+	border-color: #FFFFFF;
+}
+
+input, select {
+
+    background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+}
+
+
+label {
+    display: flex;
+    color: var(--clr-dark);
+    font-weight: var(--fw-bold);
+    display: block;
+    text-align: center;
+    font-size: 1.5em;
+    transition: width 4s;
+    
+
+}
+label, .conv {
+    font-size: 1em;
+    
+}
+
+
+
+
 
 /* hiding arrow in number input */
 
