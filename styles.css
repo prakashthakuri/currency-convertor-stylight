@@ -10,7 +10,7 @@
 :root {
     --fw-reg: 300;
     --fw-bold: 3em;
-    --clr-light: #b5b2b8;
+    --clr-light: #3c8cb1;
     --clr-dark: #303030;
     --clr-accent: #58ACFA;
     --fs-body:2rem;
@@ -24,24 +24,58 @@ html{
 
 body {
     background: var(--clr-accent);
-    color: var(--clr-dark);
     font-size: var(--fw-reg);
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    padding: 100px 0 25px;
     text-align: center;
+    
 }
 
-div {
+.main{
+    display: grid;
+    grid: 'convertor-form '
+            'result-div '
+            'history';
+    grid-auto-flow: dense;
+    
+}
+@media only screen and (min-width: 868px){
+    .main {
+    grid-template-columns: none;
+    grid-template-areas:  
+            'convertor-form result-div  '
+            'history history';
+   max-width: 100%;
+   /* justify-content: space-between; */
+   /* padding: 20px; */
+    }
+}
+
+@media only screen and (min-width: 1200px){
+    .main {
+
+    display: flex;
+    grid-template-columns: none;
+    grid-template-areas:  
+            'convertor-form result-div history  '
+            'convertor-form result-div history  ';
+    max-width: 100%;
+    justify-content: space-between;
+    /* padding: 20px; */
+    }
+}
+
+div:not(.main) {
     height: 300px;
     width: 100%;
-    background: var(--clr-light);
+    background-color: var(--clr-light);
     display: block;
     margin: 20px auto;
     max-width: 300px;
     padding: 1rem;
 }
+
 
 button {
     border-radius: 20px;

@@ -9,6 +9,10 @@ const apiurl = "http://data.fixer.io/api/latest/"; // Api URL with its endpoint(
 
 let convert = document.getElementById("convert"); // button
 let history = document.getElementById("history");
+const resultDiv = document.getElementById("result-div");
+ //DIv Toogle
+ resultDiv.style.display = "none";
+
 //responsedate is the value fetched from axios, amount is the value input by the user,
 //initial currencya and exchange currency is the exchange currency desired by the user
 function getConversion(responseData, amount, initialCurrency, exchangeCurrency) {
@@ -36,9 +40,6 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     " " +
     convertedAmount +
     "</strong>";
-    
-
-
 
   //Getting the TimeStamp for the history
   console.log(responseData.timestamp);
@@ -53,38 +54,33 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
   console.log(date);
 
-  if(amount == ""){
-    document.getElementById("result").innerHTML = "Please enter the amount greater than 0.1"; // error message if the amount is 0 or null
-  }
-  else{
+  if (amount == "") {
+    document.getElementById("result").innerHTML =
+      "Please enter the amount greater than 0.1"; // error message if the amount is 0 or null
+  } else {
     document.getElementById("result").innerHTML = result; //Rendering the Converted Amount
-    
-  document.getElementById("date").innerHTML = "<br>as of <br> " + date; // Rendering date
-  document.getElementById("conv").innerHTML = initialCurrency + " to " + exchangeCurrency+" Conversion";
 
-
+    document.getElementById("date").innerHTML = "<br>as of <br> " + date; // Rendering date
+    document.getElementById("conv").innerHTML =
+      initialCurrency + " to " + exchangeCurrency + " Conversion";
+    localStorage();
   }
-
+}
+function localStorage() {
   //Storage using localStorage
   const key = amount;
   const value = convertedAmount;
-  console.log(key, value)
-  if(key && value) {
-    localStorage.setItem(key, value)
-    
+  console.log(key, value);
+  if (key && value) {
+    localStorage.setItem(key, value);
 
-    for(let i = 0; i < 10; i++){
-
+    for (let i = 0; i < 10; i++) {
       const key = localStorage.key(i);
-      const value= localStorage.getItem(key);
+      const value = localStorage.getItem(key);
 
-
-      history.innerHTML += `${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} <br/>`
-      // history.innerHTML +=`${key} ${value}<br/>`
+      history.innerHTML += `${initialCurrency} ${key} is equivalent to ${exchangeCurrency} ${value} <br/>`;
     }
   }
-
-
 }
 // Mathematical Conversion of the currency
 
@@ -96,8 +92,10 @@ function AxiosAPI() {
   let amount = document.getElementById("amount").value;
   let initialCurrency = document.getElementById("initialCurrency").value; // This variable gets the currency you want to convert to.
   let exchangeCurrency = document.getElementById("exchangeCurrency").value; // this variable gets the value of the currency you want to convert to
+  if(resultDiv.style.display == "none") {
+    resultDiv.style.display ='block';
+  }
 
-  
   axios
     .get(
       "http://data.fixer.io/api/latest?access_key=" +
