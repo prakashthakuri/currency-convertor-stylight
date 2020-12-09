@@ -1,14 +1,15 @@
 // Your JavaScript goes here.
-const apikey = 'a97dd16b7c90bb148ead75d896132793';
-const apiurl = "http://data.fixer.io/api/latest/";
-// const endpoint = 'latest' --> the endpoint is integrated with apiurl because we donot have many options for endpoint based upon our api subscription
 
-console.log(apikey);
+// Prakash Shahi Thakuri 
+// Email: info@prakashthakuri.com
+// Stylight
+
+const apikey = 'a97dd16b7c90bb148ead75d896132793'; // My Personal API KEY
+const apiurl = "http://data.fixer.io/api/latest/"; // Api URL with its endpoint(latest)
+
 let convert = document.getElementById("convert"); // button
 
-const request = new XMLHttpRequest();
-var responseData = 1;
-//Here goes the Ajax Request
+// const request = new XMLHttpRequest();
 
 function getConversion(responseData, amount, initialCurrency, exchangeCurrency) {
   currency_val = {
@@ -23,22 +24,31 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   );
 
   console.log(amount, new_amount)
-//   console.log(new_amount);
-//   console.log(responseData.date);
-//   console.log(responseData);
-//   console.log(responseData.timestamp);
+
+ 
+  
+
+  console.log(responseData.timestamp);
+  var newDate = new Date(responseData.timestamp * 1000) //converting timestamp to millisecond and initializing new Date object
+  var year = newDate.getFullYear()
+  var month = ('0'+(newDate.getMonth() + 1)).slice(-2)
+  var date =('0'+newDate.getDate()).slice(-2)
+  var hours = ('0' + newDate.getHours()).slice(-2)
+  var minutes = ('0' + newDate.getMinutes()).slice(-2)
+  var seconds = ('0' + newDate.getSeconds()).slice(-2)
+  var newUpdate =  year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds
+  console.log(newUpdate)
 }
 
 function conversion(amount, initial, exchange) {
   return (exchange / initial) * amount;
 }
 
-function AjaxAPI() {
+function AxiosAPI() {
   let amount = document.getElementById("amount").value;
   let initialCurrency = document.getElementById("initialCurrency").value; // This variable gets the currency you want to convert to.
   let exchangeCurrency = document.getElementById("exchangeCurrency").value; // this variable gets the value of the currency you want to convert to
 
-  //   const request = new XMLHttpRequest();
 
   axios
     .get(
@@ -61,13 +71,7 @@ function AjaxAPI() {
     .then(function () {
       // always executed
     });
-  //   request.open(
-  //     "GET",
-  //     "http://data.fixer.io/api/latest?access_key="+apikey+"&base=EUR&symbols=USD, EUR, JPY",
-  //     true
-  //   );
+ 
 }
 
-convert.addEventListener("click", AjaxAPI);
-console.log(responseData);
-// console.log(responseData.rates.USD)
+convert.addEventListener("click", AxiosAPI);
