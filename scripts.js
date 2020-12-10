@@ -24,7 +24,7 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     JPY: responseData.rates.JPY,
   };
 
-  //referencing
+   //referencing
   let convertedAmount = conversion(
     amount,
     currency_val[initialCurrency],
@@ -37,7 +37,7 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   const result = `${initialCurrency} ${amount} is equivalent to  <b> ${exchangeCurrency} ${convertedAmount} </b>`;
 
   //Getting the TimeStamp for the history
-  date = getDate(responseData); //Calling date function
+  date= getDate(responseData) //Calling date function
 
   if (amount == "") {
     document.getElementById("result").innerHTML =
@@ -46,48 +46,50 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     document.getElementById("result").innerHTML = result; //Rendering the Converted Amount
 
     document.getElementById("date").innerHTML = `<br> as of <br> ${date}`; // Rendering date
-    document.getElementById(
-      "conv"
-    ).innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
+    document.getElementById("conv").innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
   }
   return convertedAmount;
+
+
+
 }
 // initializing getDate function to get the timestamp from the api and converting into the date and we have return it to the getConversion function
-function getDate(responseData) {
-  //Getting the TimeStamp for the history
-  // console.log(responseData.timestamp);
-  var newDate = new Date(responseData.timestamp * 1000); //converting timestamp to millisecond and initializing new Date object
-  var year = newDate.getFullYear();
-  var month = ("0" + (newDate.getMonth() + 1)).slice(-2);
-  var date = ("0" + newDate.getDate()).slice(-2);
-  var hours = ("0" + newDate.getHours()).slice(-2);
-  var minutes = ("0" + newDate.getMinutes()).slice(-2);
-  var seconds = ("0" + newDate.getSeconds()).slice(-2);
-  var date = `${year}-${month}-${date}  ${hours}:${minutes}:${seconds}`;
-  return date;
+function getDate(responseData){
+    //Getting the TimeStamp for the history
+    // console.log(responseData.timestamp);
+    var newDate = new Date(responseData.timestamp * 1000); //converting timestamp to millisecond and initializing new Date object
+    var year = newDate.getFullYear();
+    var month = ("0" + (newDate.getMonth() + 1)).slice(-2);
+    var date = ("0" + newDate.getDate()).slice(-2);
+    var hours = ("0" + newDate.getHours()).slice(-2);
+    var minutes = ("0" + newDate.getMinutes()).slice(-2);
+    var seconds = ("0" + newDate.getSeconds()).slice(-2);
+    var date = `${year}-${month}-${date}  ${hours}:${minutes}:${seconds}`;
+    return date
 }
 
 //getStoredItem --> a sessionStorage function to get the variable which has been stored in  setStoredItem
 
-function getStoredItem() {
-  fResult = sessionStorage.getItem("key");
-  if (fResult) {
-    history.innerHTML = fResult; // rendering
-  }
+function getStoredItem(){
+  fResult = sessionStorage.getItem('key')
+  if(fResult){
+  history.innerHTML = fResult; // rendering 
+  }    
 }
 
 //setStoredItem --> a sessionStorage function to set the variable into the localstorage which is called from the AxiosApi
 
-function setStoredItem(amount, convertedAmount, initialCurrency, exchangeCurrency, date) {
-  let finalResult = `${initialCurrency} ${amount} is equivalent to ${exchangeCurrency} ${convertedAmount} as of ${date} <br> `;
+function setStoredItem(amount, convertedAmount, initialCurrency, exchangeCurrency, date){
+  let finalResult = `${initialCurrency} ${amount} is equivalent to ${exchangeCurrency} ${convertedAmount} as of ${date} <br> `; 
   // console.log(finalResult);
-  sResult = sessionStorage.getItem("key"); // storeResult ---> we get this result from above function as a part of sessionStorage function of js
-  if (sResult) {
+  sResult = sessionStorage.getItem('key'); // storeResult ---> we get this result from above function as a part of sessionStorage function of js
+  if(sResult){
     sResult += finalResult;
-  } else {
+  }else{
     sResult = finalResult;
   }
-  sessionStorage.setItem("key", sResult);
+  sessionStorage.setItem('key', sResult)
+
 }
 
 // Mathematical Conversion of the currency
@@ -117,18 +119,13 @@ function AxiosAPI() {
 
       responseData = response.data;
 
-      convertedAmount = getConversion(
-        responseData,
-        amount,
-        initialCurrency,
-        exchangeCurrency
-      );
-      console.log("Converted Amount:", convertedAmount);
+    convertedAmount = getConversion(responseData, amount, initialCurrency, exchangeCurrency);
+    console.log('Converted Amount:', convertedAmount)
       // handle success
       //   console.log(response);
       date = getDate(responseData);
       setStoredItem(amount, convertedAmount, initialCurrency, exchangeCurrency, date);
-      getStoredItem();
+      getStoredItem()
     })
     .catch(function (error) {
       // handle error
@@ -140,4 +137,4 @@ function AxiosAPI() {
 }
 
 convert.addEventListener("click", AxiosAPI);
-getStoredItem(); // this function is called on onload because if you are refreshing the page you can see your previous conversion
+getStoredItem() // this function is called on onload because if you are refreshing the page you can see your previous conversion
