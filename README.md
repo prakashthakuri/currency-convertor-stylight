@@ -11,3 +11,15 @@ Bonus:
 
 - Show a history of conversion inputs.
 - Keep the history persistent on browser reload.
+
+#######################################
+
+Prakash Thakuri - Dec 9th 2020
+
+- This is a dyanamic currency convertor web application which fetch the currency from the API [fixer.io], the api call is by axios, but the api call is done by AJAX too at commit [4b49ae525a4a66656807ac3c2c6d57c53b2ab2d2]  
+- There is no any framework or library intergrated expect axios.
+- To run this web application, open index.html into your latest browser.
+- Tested with Chrome all features working.
+- This application is created with a mobile first approach. Hence will work on every screen size.
+- The histroy of conversion inputs is also avaiable at the 3rd div of the application.
+

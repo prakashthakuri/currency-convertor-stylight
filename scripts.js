@@ -10,7 +10,6 @@ const apiurl = "http://data.fixer.io/api/latest/"; // Api URL with its endpoint(
 let convert = document.getElementById("convert"); // button
 let history = document.getElementById("history");
 const resultDiv = document.getElementById("result-div");
-// let convertedAmount, amount // this is a global variable (checking for localstorage)
 
 //RESULT DIV Hide for Toogle
 resultDiv.style.display = "none";
@@ -24,7 +23,8 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     EUR: responseData.rates.EUR,
     JPY: responseData.rates.JPY,
   };
-  //referencing
+
+   //referencing
   let convertedAmount = conversion(
     amount,
     currency_val[initialCurrency],
@@ -34,7 +34,7 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
   console.log(amount, convertedAmount);
 
   //Displaying the result
-  const result = `${initialCurrency} ${amount} <br> is equivalent to <br/> <b> ${exchangeCurrency} ${convertedAmount} </b>`;
+  const result = `${initialCurrency} ${amount} is equivalent to  <b> ${exchangeCurrency} ${convertedAmount} </b>`;
 
   //Getting the TimeStamp for the history
   console.log(responseData.timestamp);
@@ -55,13 +55,14 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     document.getElementById("result").innerHTML = result; //Rendering the Converted Amount
 
     document.getElementById("date").innerHTML = `<br> as of <br> ${date}`; // Rendering date
-    document.getElementById(
-      "conv"
-    ).innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
+    document.getElementById("conv").innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
+   
   }
+
 
  localStore(amount, convertedAmount, initialCurrency, exchangeCurrency, date);
 }
+
 
 // Mathematical Conversion of the currency
 
