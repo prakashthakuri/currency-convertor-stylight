@@ -15,7 +15,7 @@ const resultDiv = document.getElementById("result-div");
 resultDiv.style.display = "none";
 
 //responsedate is the value fetched from axios, amount is the value input by the user,
-//initial currencya and exchange currency is the exchange currency desired by the user
+//initial currency and exchange currency is the exchange currency desired by the user
 function getConversion(responseData, amount, initialCurrency, exchangeCurrency) {
   //Mapping
   currency_val = {
@@ -24,29 +24,20 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     JPY: responseData.rates.JPY,
   };
 
-   //referencing
+  //referencing
   let convertedAmount = conversion(
     amount,
     currency_val[initialCurrency],
     currency_val[exchangeCurrency]
   );
 
-  console.log(amount, convertedAmount);
+  // console.log(amount, convertedAmount);
 
   //Displaying the result
   const result = `${initialCurrency} ${amount} is equivalent to  <b> ${exchangeCurrency} ${convertedAmount} </b>`;
 
   //Getting the TimeStamp for the history
-  console.log(responseData.timestamp);
-  var newDate = new Date(responseData.timestamp * 1000); //converting timestamp to millisecond and initializing new Date object
-  var year = newDate.getFullYear();
-  var month = ("0" + (newDate.getMonth() + 1)).slice(-2);
-  var date = ("0" + newDate.getDate()).slice(-2);
-  var hours = ("0" + newDate.getHours()).slice(-2);
-  var minutes = ("0" + newDate.getMinutes()).slice(-2);
-  var seconds = ("0" + newDate.getSeconds()).slice(-2);
-  var date = `${year}-${month}-${date}  ${hours}:${minutes}:${seconds}`;
-  console.log(date);
+  date = getDate(responseData); //Calling date function
 
   if (amount == "") {
     document.getElementById("result").innerHTML =
@@ -55,20 +46,57 @@ function getConversion(responseData, amount, initialCurrency, exchangeCurrency) 
     document.getElementById("result").innerHTML = result; //Rendering the Converted Amount
 
     document.getElementById("date").innerHTML = `<br> as of <br> ${date}`; // Rendering date
-    document.getElementById("conv").innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
-   
+    document.getElementById(
+      "conv"
+    ).innerHTML = `${initialCurrency} to ${exchangeCurrency} Conversion `;
   }
-
-
- localStore(amount, convertedAmount, initialCurrency, exchangeCurrency, date);
+  return convertedAmount;
+}
+// initializing getDate function to get the timestamp from the api and converting into the date and we have return it to the getConversion function
+function getDate(responseData) {
+  //Getting the TimeStamp for the history
+  // console.log(responseData.timestamp);
+  var newDate = new Date(responseData.timestamp * 1000); //converting timestamp to millisecond and initializing new Date object
+  var year = newDate.getFullYear();
+  var month = ("0" + (newDate.getMonth() + 1)).slice(-2);
+  var date = ("0" + newDate.getDate()).slice(-2);
+  var hours = ("0" + newDate.getHours()).slice(-2);
+  var minutes = ("0" + newDate.getMinutes()).slice(-2);
+  var seconds = ("0" + newDate.getSeconds()).slice(-2);
+  var date = `${year}-${month}-${date}  ${hours}:${minutes}:${seconds}`;
+  return date;
 }
 
+//getStoredItem --> a sessionStorage function to get the variable which has been stored in  setStoredItem
+
+function getStoredItem() {
+  fResult = sessionStorage.getItem("key");
+  if (fResult) {
+    history.innerHTML = fResult; // rendering
+  }
+}
+
+//setStoredItem --> a sessionStorage function to set the variable into the localstorage which is called from the AxiosApi
+
+function setStoredItem(amount, convertedAmount, initialCurrency, exchangeCurrency, date) {
+  let finalResult = `${initialCurrency} ${amount} is equivalent to ${exchangeCurrency} ${convertedAmount} as of ${date} <br> `;
+  // console.log(finalResult);
+  sResult = sessionStorage.getItem("key"); // storeResult ---> we get this result from above function as a part of sessionStorage function of js
+  if (sResult) {
+    sResult += finalResult;
+  } else {
+    sResult = finalResult;
+  }
+  sessionStorage.setItem("key", sResult);
+}
 
 // Mathematical Conversion of the currency
 
 function conversion(amount, initial, exchange) {
   return (exchange / initial) * amount;
 }
+
+//API CALL
 
 function AxiosAPI() {
   let amount = document.getElementById("amount").value;
@@ -89,9 +117,18 @@ function AxiosAPI() {
 
       responseData = response.data;
 
-      getConversion(responseData, amount, initialCurrency, exchangeCurrency);
+      convertedAmount = getConversion(
+        responseData,
+        amount,
+        initialCurrency,
+        exchangeCurrency
+      );
+      console.log("Converted Amount:", convertedAmount);
       // handle success
       //   console.log(response);
+      date = getDate(responseData);
+      setStoredItem(amount, convertedAmount, initialCurrency, exchangeCurrency, date);
+      getStoredItem();
     })
     .catch(function (error) {
       // handle error
@@ -103,30 +140,4 @@ function AxiosAPI() {
 }
 
 convert.addEventListener("click", AxiosAPI);
-window.onload = localStore();
-
-// Storing the converted histroy
-function localStore(key, value, initialCurrency, exchangeCurrency, time) {
-  console.log("this is working onload");
- 
-  console.log(key, value, initialCurrency, exchangeCurrency);
-
-    if (key && value) {
-      sessionStorage.setItem('amount', key);
-      sessionStorage.setItem('value', value);
-      sessionStorage.setItem('time', time)
-      sessionStorage.setItem('initialCur', initialCurrency)
-      sessionStorage.setItem('excCur', exchangeCurrency) 
-   }
-
-  let rAmount = sessionStorage.getItem('amount')
-  let rValue = sessionStorage.getItem('value')
-  let rTime = sessionStorage.getItem('time')
-  let rInit = sessionStorage.getItem('initialCur')
-  let rExc = sessionStorage.getItem('excCur')
-  
-  let finalResult = `${rInit} ${rAmount} is equivalent to ${rExc} ${rValue} as of ${rTime}<br>`;
-  console.log(finalResult);
-  history.innerHTML += finalResult
-
-}
+getStoredItem(); // this function is called on onload because if you are refreshing the page you can see your previous conversion
